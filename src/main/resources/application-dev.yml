@@ -2,7 +2,7 @@ server:
   port: 8888
 
 spring:
-  datasoruce:
+  datasource:
     url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 1234
