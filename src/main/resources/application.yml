@@ -1,10 +1,20 @@
 spring:
   profiles:
     active: dev
+
 #命令行傳參 執行jar
 
 #maven->Lifecycle->package 點擊
 #包完 看target->會有boot-lauch-1.0.0.jar
 #終端機->cd target
 #java -jar boot-lauch-1.0.0.jar --spring.profiles.active=prod
+
+jasypt:
+  encryptor:
+    password: 123456
+#加密
+#java -cp jasypt-1.9.2.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI password=123456 algorithm=PBEWithMD5AndDES input=root
+#解密
+#ENC(加密後的字串)
+
 
