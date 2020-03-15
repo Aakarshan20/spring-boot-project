@@ -41,7 +41,7 @@ public class ArticleRestController{
 	}
 	
 	//@RequestMapping(value="/article/{id}", method=PUT, produces="application/json")
-	@PutMapping(value="/article/{id}", produces="application/json")
+	@PutMapping(value="/article/{id}")
 	public AjaxResponse updateArticle(@PathVariable Long id, @RequestBody
 	Article article) {
 
