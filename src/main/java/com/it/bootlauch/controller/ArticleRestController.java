@@ -37,7 +37,8 @@ public class ArticleRestController{
 //		log.info("saveArticle: {}", author);
 //		return AjaxResponse.success(author);
 		log.info("saveArticle: {}", article);
-		articleRestService.saveArticle(article);
+		log.info("articleRestService return:" + articleRestService.saveArticle(article));
+		//articleRestService.saveArticle(article);
 		return AjaxResponse.success(article);
 	}
 	
