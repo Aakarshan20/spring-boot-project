@@ -1,6 +1,7 @@
 package com.it.bootlauch;
 
 import com.it.bootlauch.controller.ArticleRestController;
+import com.it.bootlauch.service.ArticleRestService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,11 +27,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class ArticleRestControllerTest2 {
 	@Resource
 	private MockMvc mockMvc;
-	
-	@Before
-	public void setUp(){
-		mockMvc = MockMvcBuilders.standaloneSetup(new ArticleRestController()).build();
-	}
+
+	@Resource
+	ArticleRestService articleRestService;
+
+	//已使用AutoConfigureMockMvc取代
+//	@Before
+//	public void setUp(){
+//		mockMvc = MockMvcBuilders.standaloneSetup(new ArticleRestController()).build();
+//	}
 	
 	@Test
 	public void saveArticle() throws Exception{

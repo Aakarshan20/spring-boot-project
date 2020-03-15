@@ -3,9 +3,11 @@ package com.it.bootlauch.controller;
 import com.it.bootlauch.model.AjaxResponse;
 import com.it.bootlauch.model.Article;
 import com.it.bootlauch.model.Reader;
+import com.it.bootlauch.service.ArticleRestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 @RequestMapping("/rest")
 public class ArticleRestController{
+	@Resource
+	ArticleRestService articleRestService;
+
+
+
 
 	//@RequestMapping(value="/article", method= POST, produces="application/json")
 	@PostMapping(value="/article")
@@ -30,6 +37,7 @@ public class ArticleRestController{
 //		log.info("saveArticle: {}", author);
 //		return AjaxResponse.success(author);
 		log.info("saveArticle: {}", article);
+		articleRestService.saveArticle(article);
 		return AjaxResponse.success(article);
 	}
 	
