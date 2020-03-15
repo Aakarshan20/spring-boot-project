@@ -28,17 +28,17 @@ public class ArticleRestControllerTest{
 	public void saveArticle() throws Exception{
 		String article = "{\n" + 
 			"\"id\":1,\n" + 
-			"\"author\":\"authro abc\",\n" + 
+			"\"auther\":\"abc\",\n" +
 			"\"title\":\"title abc\",\n" + 
 			"\"content\":\"content abc\",\n" + 
-			"\"createTime\":\"2020-03-15 13:44:20\",\n" + 
-			"\"reader\":[{\"name\":\"reader1\", \"age\":15}], {\"name\":\"reader2\", \"age\":20},\n" ;
+			//"\"createTime\":\"2020-03-15 13:44:20\",\n" +
+			"\"reader\":[{\"name\":\"reader1\", \"age\":15}, {\"name\":\"reader2\", \"age\":20}]}\n" ;
 			
 			MvcResult result = mockMvc.perform(MockMvcRequestBuilders.request(HttpMethod.POST, "/rest/article")
 				.contentType("application/json").content(article))
 					.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.data.author").value("abc"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.data.reader[0].age").value(18))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data.auther").value("abc"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.data.reader[0].age").value(15))
 				.andDo(print())
 				.andReturn();
 
