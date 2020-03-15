@@ -41,7 +41,7 @@ public class ArticleRestControllerTest{
 				.andExpect(MockMvcResultMatchers.jsonPath("$.data.reader[0].age").value(18))
 				.andDo(print())
 				.andReturn();
-			
+
 			log.info(result.getResponse().getContentAsString());
 	}
 }
