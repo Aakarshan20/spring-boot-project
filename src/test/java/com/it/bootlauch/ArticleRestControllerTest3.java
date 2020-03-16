@@ -3,13 +3,12 @@ package com.it.bootlauch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.it.bootlauch.controller.ArticleRestController;
 import com.it.bootlauch.model.Article;
-import com.it.bootlauch.service.ArticleRestService;
+import com.it.bootlauch.service.ArticleRestJDBCServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -33,7 +32,7 @@ public class ArticleRestControllerTest3 {
 	private MockMvc mockMvc;
 
 	@MockBean
-	ArticleRestService articleRestService;
+	ArticleRestJDBCServiceImpl articleRestJDBCServiceImpl;
 
 	//已使用AutoConfigureMockMvc取代
 //	@Before
@@ -55,7 +54,7 @@ public class ArticleRestControllerTest3 {
 //		articleRestService.saveArticle(articleObj);
 
 		//打樁(偽造的返回值 因為service是假的 只有controller是真的)
-		when(articleRestService.saveArticle(articleObj)).thenReturn("ok");
+		//when(articleRestJDBCServiceImpl.saveArticle(articleObj)).thenReturn(articleObj);
 
 
 			

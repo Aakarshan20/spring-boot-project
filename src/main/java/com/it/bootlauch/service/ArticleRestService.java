@@ -1,15 +1,18 @@
 package com.it.bootlauch.service;
 
+
 import com.it.bootlauch.model.Article;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 
-@Slf4j
-@Service
-public class ArticleRestService {
-    public String saveArticle(Article article){
-        log.info("save article:{}", article);
-        return "test";
-    }
+public interface ArticleRestService {
+    public Article saveArticle(Article article);
+
+    public void deleteArticle(Long id);
+
+    public void updateArticle(Article article);
+
+    public Article getArticle(Long id);
+
+    public List<Article> getAll();
 }

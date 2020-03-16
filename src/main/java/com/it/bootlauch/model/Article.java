@@ -29,7 +29,7 @@ public class Article {
 
     @JsonInclude(JsonInclude.Include.NON_NULL) //過濾為空的值
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")//定義時間格式
-    private Date createTime;
+    private Date createdTime;
 
     private List<Reader> reader;
 

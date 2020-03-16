@@ -2,7 +2,7 @@ package com.it.bootlauch.controller;
 
 import com.it.bootlauch.model.AjaxResponse;
 import com.it.bootlauch.model.Article;
-import com.it.bootlauch.model.Reader;
+import com.it.bootlauch.service.ArticleRestJDBCServiceImpl;
 import com.it.bootlauch.service.ArticleRestService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,16 +12,12 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 @Slf4j
 @RestController
 @RequestMapping("/rest")
 public class ArticleRestController{
-	@Resource
+	@Resource(name="articleRestJDBCServiceImpl")
+	//@Resource
 	ArticleRestService articleRestService;
 
 
@@ -48,8 +44,9 @@ public class ArticleRestController{
 //									@RequestParam String createTime){
 //		log.info("saveArticle: {}", author);
 //		return AjaxResponse.success(author);
-		log.info("saveArticle: {}", article);
-		log.info("articleRestService return:" + articleRestService.saveArticle(article));
+		//log.info("saveArticle: {}", article);
+		//log.info("articleRestService return:" + articleRestJDBCServiceImpl.saveArticle(article));
+		articleRestService.saveArticle(article);
 		//articleRestService.saveArticle(article);
 		return AjaxResponse.success(article);
 	}
@@ -58,6 +55,7 @@ public class ArticleRestController{
 	@DeleteMapping(value="/article/{id}", produces="application/json")
 	public AjaxResponse deleteArticle(@PathVariable Long id){
 		log.info("deleteArticle: {}", id);
+		articleRestService.deleteArticle(id);
 		return AjaxResponse.success(id);
 	}
 	
@@ -68,6 +66,7 @@ public class ArticleRestController{
 
 		article.setId(id);
 		log.info("updateArticle: {}", article);
+		articleRestService.updateArticle(article);
 		return AjaxResponse.success(article);
 	}
 	
@@ -75,11 +74,23 @@ public class ArticleRestController{
 	@GetMapping(value="/article/{id}", produces="application/json")
 	public AjaxResponse getArticle(@PathVariable Long id){
 		
-		Article article = Article.builder().id(1L).author("test author").content("test content").createTime(new Date()).title("title 1").build();
+		//Article article = Article.builder().id(1L).author("test author").content("test content").createTime(new Date()).title("title 1").build();
+		Article article = articleRestService.getArticle(id);
 		
-		 log.info("getArticle: {}", article);
+		 //log.info("getArticle: {}", article);
 		 return AjaxResponse.success(article);
 	}
+
+	@GetMapping(value="/article", produces="application/json")
+	public AjaxResponse getAll(){
+
+		//Article article = Article.builder().id(1L).author("test author").content("test content").createTime(new Date()).title("title 1").build();
+		List<Article> articles = articleRestService.getAll();
+
+		//log.info("getArticle: {}", article);
+		return AjaxResponse.success(articles);
+	}
+
 	
 	
 }
