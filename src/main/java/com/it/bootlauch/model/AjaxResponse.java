@@ -1,9 +1,14 @@
 package com.it.bootlauch.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
+@ApiModel
 public class AjaxResponse{
+
+	@ApiModelProperty("是否請求成功")
 	private boolean isok;
 	private int code;
 	private String message;

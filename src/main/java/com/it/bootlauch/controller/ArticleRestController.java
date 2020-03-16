@@ -4,6 +4,7 @@ import com.it.bootlauch.model.AjaxResponse;
 import com.it.bootlauch.model.Article;
 import com.it.bootlauch.model.Reader;
 import com.it.bootlauch.service.ArticleRestService;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,18 @@ public class ArticleRestController{
 
 
 
-
+	@ApiOperation(value="添加文章", notes="添加新的文章", tags="Article", httpMethod="POST")
+//	@ApiImplicitParams({
+//			@ApiImplicitParam(name="title", value="文章標題", required=true, dataType = "String"),
+//			@ApiImplicitParam(name="content", value="文章內容", required=true, dataType = "String"),
+//			@ApiImplicitParam(name="author", value="作者", required=true, dataType = "String"),
+//			@ApiImplicitParam(name="reader", value="讀者", required=false, dataType = "List<Reader>"),
+//	})
+	@ApiResponses({
+			@ApiResponse(code=200, message="成功", response = AjaxResponse.class),
+			@ApiResponse(code=400, message="用戶輸入錯誤", response = AjaxResponse.class),
+			@ApiResponse(code=500, message="系統內部錯誤", response = AjaxResponse.class)
+	})
 	//@RequestMapping(value="/article", method= POST, produces="application/json")
 	@PostMapping(value="/article")
 	public AjaxResponse saveArticle(@RequestBody Article article){
