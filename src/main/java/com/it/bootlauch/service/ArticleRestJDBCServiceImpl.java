@@ -18,9 +18,6 @@ public class ArticleRestJDBCServiceImpl implements ArticleRestService{
 
     @Override
     public Article saveArticle(Article article){
-        //log.info("save article:{}", article);
-        //return "test";
-
         articleJDBCDAO.save(article);
         return article;
     }

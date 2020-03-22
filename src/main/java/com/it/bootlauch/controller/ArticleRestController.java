@@ -2,6 +2,8 @@ package com.it.bootlauch.controller;
 
 import com.it.bootlauch.model.AjaxResponse;
 import com.it.bootlauch.model.Article;
+import com.it.bootlauch.response.BaseException;
+import com.it.bootlauch.response.BaseResponse;
 import com.it.bootlauch.service.ArticleRestJDBCServiceImpl;
 import com.it.bootlauch.service.ArticleRestService;
 import io.swagger.annotations.*;
@@ -15,10 +17,11 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/rest")
+@BaseResponse
 public class ArticleRestController{
 	@Resource(name="articleRestJDBCServiceImpl")
 	//@Resource
-	ArticleRestService articleRestService;
+	ArticleRestJDBCServiceImpl articleRestService;
 
 
 
@@ -36,7 +39,7 @@ public class ArticleRestController{
 	})
 	//@RequestMapping(value="/article", method= POST, produces="application/json")
 	@PostMapping(value="/article")
-	public AjaxResponse saveArticle(@RequestBody Article article){
+	public Article saveArticle(@RequestBody Article article){
 //	public AjaxResponse saveArticle(@RequestParam String id,
 //									@RequestParam String author,
 //									@RequestParam String title,
@@ -48,47 +51,53 @@ public class ArticleRestController{
 		//log.info("articleRestService return:" + articleRestJDBCServiceImpl.saveArticle(article));
 		articleRestService.saveArticle(article);
 		//articleRestService.saveArticle(article);
-		return AjaxResponse.success(article);
+		//return AjaxResponse.success(article);
+		return article;
 	}
 	
 	//@RequestMapping(value="/article/{id}", method=DELETE, produces="application/json")
 	@DeleteMapping(value="/article/{id}", produces="application/json")
-	public AjaxResponse deleteArticle(@PathVariable Long id){
+	public Article deleteArticle(@PathVariable Long id){
 		log.info("deleteArticle: {}", id);
+		Article article = articleRestService.getArticle(id);
+
 		articleRestService.deleteArticle(id);
-		return AjaxResponse.success(id);
+		return article;
 	}
 	
 	//@RequestMapping(value="/article/{id}", method=PUT, produces="application/json")
 	@PutMapping(value="/article/{id}")
-	public AjaxResponse updateArticle(@PathVariable Long id, @RequestBody
+	public Article updateArticle(@PathVariable Long id, @RequestBody
 	Article article) {
 
 		article.setId(id);
 		log.info("updateArticle: {}", article);
 		articleRestService.updateArticle(article);
-		return AjaxResponse.success(article);
+		//return AjaxResponse.success(article);
+		return article;
 	}
 	
 //	@RequestMapping(value="/article/{id}", method=GET, produces="application/json")
 	@GetMapping(value="/article/{id}", produces="application/json")
-	public AjaxResponse getArticle(@PathVariable Long id){
+	public Article getArticle(@PathVariable Long id){
 		
 		//Article article = Article.builder().id(1L).author("test author").content("test content").createTime(new Date()).title("title 1").build();
 		Article article = articleRestService.getArticle(id);
+		System.out.println(article);
 		
 		 //log.info("getArticle: {}", article);
-		 return AjaxResponse.success(article);
+		 //return AjaxResponse.success(article);
+		return article;
 	}
 
 	@GetMapping(value="/article", produces="application/json")
-	public AjaxResponse getAll(){
+	public List<Article> getAll(){
 
 		//Article article = Article.builder().id(1L).author("test author").content("test content").createTime(new Date()).title("title 1").build();
 		List<Article> articles = articleRestService.getAll();
-
 		//log.info("getArticle: {}", article);
-		return AjaxResponse.success(articles);
+		//return AjaxResponse.success(articles);
+		return articles;
 	}
 
 	
