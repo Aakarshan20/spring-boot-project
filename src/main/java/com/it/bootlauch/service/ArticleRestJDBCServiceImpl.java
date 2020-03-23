@@ -5,6 +5,7 @@ import com.it.bootlauch.model.Article;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,9 +24,14 @@ public class ArticleRestJDBCServiceImpl implements ArticleRestService{
     @Resource
     JdbcTemplate secondaryJdbcTemplate;
 
+    @Transactional
     @Override
     public Article saveArticle(Article article){
         articleJDBCDAO.save(article, primaryJdbcTemplate);
+        articleJDBCDAO.save(article, secondaryJdbcTemplate);
+
+        int a = 1/0;
+
         return article;
     }
 
