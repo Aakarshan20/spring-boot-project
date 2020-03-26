@@ -1,9 +1,8 @@
 package com.it.bootlauch.dao;
 
-import com.it.bootlauch.model.Article;
+import com.it.bootlauch.model.ArticleVO;
 import com.it.bootlauch.response.BaseException;
 import com.it.bootlauch.response.ResponseCode;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,41 +15,41 @@ public class ArticleJDBCDAO {
     @Resource
     private JdbcTemplate primaryJdbcTemplate ;
 
-    public void save(Article article, JdbcTemplate jdbcTemplate){
+    public void save(ArticleVO articleVO, JdbcTemplate jdbcTemplate){
         jdbcTemplate.update("insert into article (author, title, content) values (?, ?, ?)",
-                article.getAuthor(),
-                article.getTitle(),
-                article.getContent());
+                articleVO.getAuthor(),
+                articleVO.getTitle(),
+                articleVO.getContent());
     }
 
     public void deleteById(Long id, JdbcTemplate jdbcTemplate){
         jdbcTemplate.update("delete from article where id = ?", new Object[]{id});
     }
 
-    public void updateById(Article article, JdbcTemplate jdbcTemplate){
+    public void updateById(ArticleVO articleVO, JdbcTemplate jdbcTemplate){
         jdbcTemplate.update("update article set author=?, title=?, content=? where id=?",
-                article.getTitle(),
-                article.getAuthor(),
-                article.getContent(),
-                article.getId());
+                articleVO.getTitle(),
+                articleVO.getAuthor(),
+                articleVO.getContent(),
+                articleVO.getId());
     }
 
-    public Article findById(Long id, JdbcTemplate jdbcTemplate){
-        Article article = null;
+    public ArticleVO findById(Long id, JdbcTemplate jdbcTemplate){
+        ArticleVO articleVO = null;
         try{
-            article =(Article) jdbcTemplate.queryForObject("select * from article where id = ?", new Object[]{id}, new BeanPropertyRowMapper(Article.class));
+            articleVO =(ArticleVO) jdbcTemplate.queryForObject("select * from article where id = ?", new Object[]{id}, new BeanPropertyRowMapper(ArticleVO.class));
         } catch(Exception e){
             throw new BaseException(ResponseCode.RESOURCES_NOT_EXIST);
         }
-        return article;
+        return articleVO;
     }
 
-    public List<Article> findAll(JdbcTemplate jdbcTemplate){
-        List<Article> articles =  (List<Article>)jdbcTemplate.query("select * from article ", new BeanPropertyRowMapper(Article.class));
-        if(articles.size() == 0){
+    public List<ArticleVO> findAll(JdbcTemplate jdbcTemplate){
+        List<ArticleVO> articleVOS =  (List<ArticleVO>)jdbcTemplate.query("select * from article ", new BeanPropertyRowMapper(ArticleVO.class));
+        if(articleVOS.size() == 0){
             throw new BaseException(ResponseCode.RESOURCES_NOT_EXIST);
         }
-        return articles;
+        return articleVOS;
 
     }
 }

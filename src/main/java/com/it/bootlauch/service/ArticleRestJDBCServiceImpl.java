@@ -1,7 +1,7 @@
 package com.it.bootlauch.service;
 
 import com.it.bootlauch.dao.ArticleJDBCDAO;
-import com.it.bootlauch.model.Article;
+import com.it.bootlauch.model.ArticleVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -26,13 +26,13 @@ public class ArticleRestJDBCServiceImpl implements ArticleRestService{
 
     @Transactional
     @Override
-    public Article saveArticle(Article article){
-        articleJDBCDAO.save(article, primaryJdbcTemplate);
-        articleJDBCDAO.save(article, secondaryJdbcTemplate);
+    public ArticleVO saveArticle(ArticleVO articleVO){
+        articleJDBCDAO.save(articleVO, primaryJdbcTemplate);
+        articleJDBCDAO.save(articleVO, secondaryJdbcTemplate);
 
-        int a = 1/0;
+        //int a = 1/0;
 
-        return article;
+        return articleVO;
     }
 
     @Override
@@ -41,17 +41,17 @@ public class ArticleRestJDBCServiceImpl implements ArticleRestService{
     }
 
     @Override
-    public void updateArticle(Article article) {
-        articleJDBCDAO.updateById(article, primaryJdbcTemplate);
+    public void updateArticle(ArticleVO articleVO) {
+        articleJDBCDAO.updateById(articleVO, primaryJdbcTemplate);
     }
 
     @Override
-    public Article getArticle(Long id) {
+    public ArticleVO getArticle(Long id) {
         return articleJDBCDAO.findById(id, secondaryJdbcTemplate);
     }
 
     @Override
-    public List<Article> getAll() {
+    public List<ArticleVO> getAll() {
         return articleJDBCDAO.findAll(primaryJdbcTemplate);
     }
 }

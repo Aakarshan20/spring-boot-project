@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @JsonPropertyOrder(value={"content", "title"})//改變回傳的順序
 
-public class Article {
+public class ArticleVO {
 
     @JsonIgnore
     private Long id;

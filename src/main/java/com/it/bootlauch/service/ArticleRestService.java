@@ -1,18 +1,18 @@
 package com.it.bootlauch.service;
 
 
-import com.it.bootlauch.model.Article;
+import com.it.bootlauch.model.ArticleVO;
 
 import java.util.List;
 
 public interface ArticleRestService {
-    public Article saveArticle(Article article);
+    ArticleVO saveArticle(ArticleVO articleVO);
 
-    public void deleteArticle(Long id);
+    void deleteArticle(Long id);
 
-    public void updateArticle(Article article);
+    void updateArticle(ArticleVO articleVO);
 
-    public Article getArticle(Long id);
+    ArticleVO getArticle(Long id);
 
-    public List<Article> getAll();
+    List<ArticleVO> getAll();
 }

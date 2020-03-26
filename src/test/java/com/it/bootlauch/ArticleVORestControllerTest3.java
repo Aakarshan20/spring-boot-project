@@ -1,11 +1,15 @@
 package com.it.bootlauch;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.it.bootlauch.controller.ArticleRestController;
+import com.it.bootlauch.model.ArticleVO;
 import com.it.bootlauch.service.ArticleRestJDBCServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,12 +24,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @Slf4j
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-@SpringBootTest
-public class ArticleRestControllerTest2 {
+//@WebMvcTest
+@WebMvcTest(ArticleRestController.class)
+public class ArticleVORestControllerTest3 {
 	@Resource
 	private MockMvc mockMvc;
 
-	@Resource
+	@MockBean
 	ArticleRestJDBCServiceImpl articleRestJDBCServiceImpl;
 
 	//已使用AutoConfigureMockMvc取代
@@ -36,13 +41,21 @@ public class ArticleRestControllerTest2 {
 	
 	@Test
 	public void saveArticle() throws Exception{
-		String article = "{\n" + 
-			"\"id\":1,\n" + 
-			"\"auther\":\"abc\",\n" +
-			"\"title\":\"title abc\",\n" + 
-			"\"content\":\"content abc\",\n" + 
-			//"\"createTime\":\"2020-03-15 13:44:20\",\n" +
-			"\"reader\":[{\"name\":\"reader1\", \"age\":15}, {\"name\":\"reader2\", \"age\":20}]}\n" ;
+		String article = "{\n" +
+				"\"id\":1,\n" +
+				"\"auther\":\"abc\",\n" +
+				"\"title\":\"title abc\",\n" +
+				"\"content\":\"content abc\",\n" +
+				//"\"createTime\":\"2020-03-15 13:44:20\",\n" +
+				"\"reader\":[{\"name\":\"reader1\", \"age\":15}, {\"name\":\"reader2\", \"age\":20}]}\n" ;
+		ObjectMapper objectMapper = new ObjectMapper();
+		ArticleVO articleVOObj = objectMapper.readValue(article, ArticleVO.class);
+//		articleRestService.saveArticle(articleObj);
+
+		//打樁(偽造的返回值 因為service是假的 只有controller是真的)
+		//when(articleRestJDBCServiceImpl.saveArticle(articleObj)).thenReturn(articleObj);
+
+
 			
 			MvcResult result = mockMvc.perform(MockMvcRequestBuilders.request(HttpMethod.POST, "/rest/article")
 				.contentType("application/json").content(article))

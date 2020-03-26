@@ -3,20 +3,32 @@ server:
 
 spring:
   #以下為jdbc配置
-  #datasource:
-    #primary:
-      #jdbc-url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-      #username: root
-      #password: 1234
-      #driver-class-name: com.mysql.jdbc.Driver
-    #secondary:
-      #jdbc-url: jdbc:mysql://127.0.0.1:3306/eesy02?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-      #username: root
-      #password: 1234
-      #driver-class-name: com.mysql.jdbc.Driver
+  datasource:
+#    primary:
+#      jdbc-url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#      username: root
+#      password: 1234
+#      driver-class-name: com.mysql.jdbc.Driver
+#    secondary:
+#      jdbc-url: jdbc:mysql://127.0.0.1:3306/eesy02?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#      username: root
+#      password: 1234
+#      driver-class-name: com.mysql.jdbc.Driver
+
+    url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    #database: mysql
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+    serialization:
+      indent-output: true
 
 #primarydb:
 #  uniqueResourceName: primary
@@ -41,27 +53,27 @@ spring:
 #  minPoolSize: 3
 #  maxPoolSize: 10
 #  testQuery: SELECT 1 from account #用於檢測數據庫是否存活
-
-primarydb:
-  uniqueResourceName: primary
-  xaDataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
-  xaProperties:
-    url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    user: root
-    password: 1234
-  exclusiveConnectionMode: true
-  minPoolSize: 3
-  maxPoolSize: 10
-  testQuery: SELECT 1 from dual #由于采用HikiriCP，用于检测数据库连接是否存活。
-
-secondarydb:
-  uniqueResourceName: secondary
-  xaDataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
-  xaProperties:
-    url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    user: root
-    password: 1234
-  exclusiveConnectionMode: true
-  minPoolSize: 3
-  maxPoolSize: 10
-  testQuery: SELECT 1 from dual #由于采用HikiriCP，用于检测数据库连接是否存活
+#
+#primarydb:
+#  uniqueResourceName: primary
+#  xaDataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+#  xaProperties:
+#    url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#    user: root
+#    password: 1234
+#  exclusiveConnectionMode: true
+#  minPoolSize: 3
+#  maxPoolSize: 10
+#  testQuery: SELECT 1 from dual #由于采用HikiriCP，用于检测数据库连接是否存活。
+#
+#secondarydb:
+#  uniqueResourceName: secondary
+#  xaDataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+#  xaProperties:
+#    url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#    user: root
+#    password: 1234
+#  exclusiveConnectionMode: true
+#  minPoolSize: 3
+#  maxPoolSize: 10
+#  testQuery: SELECT 1 from dual #由于采用HikiriCP，用于检测数据库连接是否存活

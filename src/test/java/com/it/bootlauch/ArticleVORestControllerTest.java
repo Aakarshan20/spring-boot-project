@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @Slf4j
 @SpringBootTest
-public class ArticleRestControllerTest{
+public class ArticleVORestControllerTest {
 	private MockMvc mockMvc;
 	
 	@Before
