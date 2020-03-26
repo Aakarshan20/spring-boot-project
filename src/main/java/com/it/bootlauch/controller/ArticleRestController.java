@@ -3,6 +3,7 @@ package com.it.bootlauch.controller;
 import com.it.bootlauch.model.AjaxResponse;
 import com.it.bootlauch.model.ArticleVO;
 import com.it.bootlauch.response.BaseResponse;
+import com.it.bootlauch.service.ArticleJPARestService;
 import com.it.bootlauch.service.ArticleRestJDBCServiceImpl;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +17,9 @@ import java.util.List;
 @RequestMapping("/rest")
 @BaseResponse
 public class ArticleRestController{
-	@Resource(name="articleRestJDBCServiceImpl")
+	@Resource(name="articleJPARestService")
 	//@Resource
-	ArticleRestJDBCServiceImpl articleRestService;
+	ArticleJPARestService articleRestService;
 
 
 

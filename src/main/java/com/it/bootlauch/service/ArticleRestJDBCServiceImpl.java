@@ -21,14 +21,13 @@ public class ArticleRestJDBCServiceImpl implements ArticleRestService{
     @Resource
     JdbcTemplate primaryJdbcTemplate;
 
-    @Resource
-    JdbcTemplate secondaryJdbcTemplate;
+    //@Resource
+    //JdbcTemplate secondaryJdbcTemplate;
 
     @Transactional
     @Override
     public ArticleVO saveArticle(ArticleVO articleVO){
         articleJDBCDAO.save(articleVO, primaryJdbcTemplate);
-        articleJDBCDAO.save(articleVO, secondaryJdbcTemplate);
 
         //int a = 1/0;
 
@@ -47,7 +46,7 @@ public class ArticleRestJDBCServiceImpl implements ArticleRestService{
 
     @Override
     public ArticleVO getArticle(Long id) {
-        return articleJDBCDAO.findById(id, secondaryJdbcTemplate);
+        return articleJDBCDAO.findById(id, primaryJdbcTemplate);
     }
 
     @Override

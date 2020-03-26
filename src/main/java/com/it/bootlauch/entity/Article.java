@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,6 +22,7 @@ import java.util.Date;
 @Builder
 @Entity
 @Table(name="article")
+@EntityListeners(AuditingEntityListener.class)
 public class Article {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -31,7 +36,19 @@ public class Article {
     @Column(length = 512)
     private String content;
 
+    /**
+     * 创建时间
+     */
+    @CreatedDate
+    @Column(name = "created_time")
     private Date createdTime;
+
+    /**
+     * 修改时间
+     */
+    @LastModifiedDate
+    @Column(name = "updated_time")
+    private Date updatedTime;
 
     //private List<Reader> reader;
 
