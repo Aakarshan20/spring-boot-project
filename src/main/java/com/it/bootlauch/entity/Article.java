@@ -40,7 +40,7 @@ public class Article {
      * 创建时间
      */
     @CreatedDate
-    @Column(name = "created_time")
+    @Column(name = "created_time", updatable = false)
     private Date createdTime;
 
     /**
