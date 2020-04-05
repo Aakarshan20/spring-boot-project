@@ -1,7 +1,5 @@
-package com.it.bootlauch;
+package com.it.bootlauch.jpa.testdb;
 
-import com.it.bootlauch.jpa.testdb.Article;
-import com.it.bootlauch.jpa.testdb.ArticleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,13 +9,15 @@ import javax.annotation.Resource;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+
 public class JPAKeyWordTest {
     @Resource
     private ArticleRepository articleRepository;
 
     @Test
     public void userTest() {
-        Article article = articleRepository.findByAuthorLike("%多數據源測試%");
+        Article article = articleRepository.findByAuthorLike("%222%");
         System.out.println(article);
     }
+
 }

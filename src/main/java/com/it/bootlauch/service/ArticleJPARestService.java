@@ -1,7 +1,9 @@
 package com.it.bootlauch.service;
 
 import com.it.bootlauch.jpa.testdb.ArticleRepository;
-import com.it.bootlauch.entity.Article;
+import com.it.bootlauch.jpa.testdb.Article;
+import com.it.bootlauch.jpa.testdb2.Message;
+import com.it.bootlauch.jpa.testdb2.MessageRepository;
 import com.it.bootlauch.model.ArticleVO;
 import com.it.bootlauch.utils.DozerUtils;
 import org.dozer.Mapper;
@@ -17,12 +19,24 @@ public class ArticleJPARestService implements ArticleRestService{
     private ArticleRepository articleRepository;
 
     @Resource
+    private MessageRepository messageRepository;
+
+    @Resource
     private Mapper dozerMapper;
 
     @Override
     public ArticleVO saveArticle(ArticleVO articleVO) {
         Article articlePO = dozerMapper.map(articleVO, Article.class);
         articleRepository.save(articlePO);
+
+        Message message = new Message();
+        message.setName("kobe");
+        message.setContent("retired");
+        messageRepository.save(message);
+
+        Optional<Message> message2 = messageRepository.findById(1L);
+        System.out.println(message2);
+
         return articleVO;
     }
 

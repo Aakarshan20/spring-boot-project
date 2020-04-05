@@ -21,8 +21,8 @@ public class ArticleRestJDBCServiceImpl implements ArticleRestService{
     @Resource
     JdbcTemplate primaryJdbcTemplate;
 
-    //@Resource
-    //JdbcTemplate secondaryJdbcTemplate;
+    @Resource
+    JdbcTemplate secondaryJdbcTemplate;
 
     @Transactional
     @Override
