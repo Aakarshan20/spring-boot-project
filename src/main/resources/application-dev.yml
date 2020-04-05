@@ -4,21 +4,18 @@ server:
 spring:
   #以下為jdbc配置
   datasource:
-#    primary:
+    primary:
 #      jdbc-url: jdbc:mysql://127.0.0.1:3306/testdb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-#      username: root
-#      password: 1234
-#      driver-class-name: com.mysql.jdbc.Driver
-#    secondary:
+      url: jdbc:mysql://127.0.0.1:3306/testdb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: 1234
+      driver-class-name: com.mysql.jdbc.Driver
+    secondary:
 #      jdbc-url: jdbc:mysql://127.0.0.1:3306/testdb2?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-#      username: root
-#      password: 1234
-#      driver-class-name: com.mysql.jdbc.Driver
-
-    url: jdbc:mysql://127.0.0.1:3306/eesy?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/testdb2?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: 1234
+      driver-class-name: com.mysql.jdbc.Driver
   jta:
     atomikos:
       datasource:

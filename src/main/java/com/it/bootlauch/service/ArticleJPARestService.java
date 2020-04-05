@@ -8,6 +8,7 @@ import com.it.bootlauch.model.ArticleVO;
 import com.it.bootlauch.utils.DozerUtils;
 import org.dozer.Mapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,6 +26,7 @@ public class ArticleJPARestService implements ArticleRestService{
     private Mapper dozerMapper;
 
     @Override
+    @Transactional
     public ArticleVO saveArticle(ArticleVO articleVO) {
         Article articlePO = dozerMapper.map(articleVO, Article.class);
         articleRepository.save(articlePO);
@@ -33,9 +35,9 @@ public class ArticleJPARestService implements ArticleRestService{
         message.setName("kobe");
         message.setContent("retired");
         messageRepository.save(message);
-
-        Optional<Message> message2 = messageRepository.findById(1L);
-        System.out.println(message2);
+        //int a = 2/0;
+//        Optional<Message> message2 = messageRepository.findById(1L);
+//        System.out.println(message2);
 
         return articleVO;
     }

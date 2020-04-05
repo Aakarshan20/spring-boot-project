@@ -1,67 +1,73 @@
 package com.it.bootlauch.config;
 
+
+import com.atomikos.jdbc.AtomikosDataSourceBean;
+import com.mysql.cj.jdbc.MysqlXADataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import java.util.Map;
+import java.sql.SQLException;
+import java.util.HashMap;
+
 
 @Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories(
-        entityManagerFactoryRef="entityManagerFactorySecondary",
-        //transactionManagerRef = "transactionManageSecondary",
-        basePackages= { "com.it.bootlauch.jpa.testdb2" }) //设置Repository所在位置
+@DependsOn("transactionManager")
+@EnableJpaRepositories(basePackages = "com.it.bootlauch.jpa.testdb2",
+        entityManagerFactoryRef = "secondaryEntityManager",
+        transactionManagerRef = "transactionManager"
+)
 public class JPASecondaryConfig {
-
-    @Resource
-    @Qualifier("secondaryDataSource")
-    private DataSource secondaryDataSource;
-
-    @Bean(name = "entityManagerSecondary")
-    public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
-        return entityManagerFactorySecondary(builder).getObject().createEntityManager();
-
-    }
-
-
-    @Bean(name = "entityManagerFactorySecondary")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary (EntityManagerFactoryBuilder builder) {
-
-        return builder
-                .dataSource(secondaryDataSource)
-                .properties(getVendorProperties())
-                .packages("com.it.bootlauch.jpa.testdb2") //设置实体类所在位置
-                .persistenceUnit("secondaryPersistenceUnit")
-                .build();
-    }
-
-    @Resource
-    private JpaProperties jpaProperties;
-
     @Autowired
-    private HibernateProperties hibernateProperties;
+    private JpaVendorAdapter jpaVendorAdapter;
 
-    private Map<String , Object> getVendorProperties() {
-        return hibernateProperties.determineHibernateProperties(jpaProperties.getProperties(), new HibernateSettings());
+    @Bean(name = "secondaryDataSourceProperties")
+    @Qualifier("secondaryDataSourceProperties")
+    @ConfigurationProperties(prefix = "spring.datasource.secondary")
+    public DataSourceProperties secondaryDataSourceProperties() {
+        return new DataSourceProperties();
     }
 
-    @Bean(name = "transactionManagerSecondary")
-    PlatformTransactionManager transactionManagerSecondary(EntityManagerFactoryBuilder builder) {
-        return new JpaTransactionManager(entityManagerFactorySecondary(builder).getObject());
+
+    @Bean(name = "secondaryDataSource", initMethod = "init", destroyMethod = "close")
+    @ConfigurationProperties(prefix = "spring.datasource.secondary")
+    public DataSource secondaryDataSource() throws SQLException {
+        MysqlXADataSource mysqlXADataSource = new MysqlXADataSource();
+        mysqlXADataSource.setUrl(secondaryDataSourceProperties().getUrl());
+        mysqlXADataSource.setPinGlobalTxToPhysicalConnection(true);
+        mysqlXADataSource.setPassword(secondaryDataSourceProperties().getPassword());
+        mysqlXADataSource.setUser(secondaryDataSourceProperties().getUsername());
+        AtomikosDataSourceBean xaDataSource = new AtomikosDataSourceBean();
+        xaDataSource.setXaDataSource(mysqlXADataSource);
+        xaDataSource.setUniqueResourceName("secondary");
+        xaDataSource.setBorrowConnectionTimeout(60);
+        xaDataSource.setMaxPoolSize(20);
+        return xaDataSource;
     }
 
+
+    @Bean(name = "secondaryEntityManager")
+    @DependsOn("transactionManager")
+    public LocalContainerEntityManagerFactoryBean secondaryEntityManager() throws Throwable {
+        HashMap<String , Object> properties = new HashMap<String, Object>();
+        properties.put("hibernate.transaction.jta.platform", AtomikosJtaPlatform.class);
+        properties.put("javax.persistence.transactionType", "JTA");
+        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
+        entityManager.setJtaDataSource(secondaryDataSource());
+        entityManager.setJpaVendorAdapter(jpaVendorAdapter);
+        //這裡要修改數據源的掃描包
+        entityManager.setPackagesToScan("com.it.bootlauch.jpa.testdb2");
+        entityManager.setPersistenceUnitName("secondaryPersistenceUnit");
+        entityManager.setJpaPropertyMap(properties);
+        return entityManager;
+    }
 }
+
