@@ -1,4 +1,4 @@
-package com.it.bootlauch.dao;
+package com.it.bootlauch.jpa.testdb;
 
 import com.it.bootlauch.model.ArticleVO;
 import com.it.bootlauch.response.BaseException;

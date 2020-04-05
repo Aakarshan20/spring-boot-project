@@ -1,4 +1,4 @@
-package com.it.bootlauch.dao;
+package com.it.bootlauch.jpa.testdb;
 
 import com.it.bootlauch.entity.Article;
 import org.springframework.data.jpa.repository.JpaRepository;

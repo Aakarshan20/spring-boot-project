@@ -1,6 +1,6 @@
 package com.it.bootlauch.service;
 
-import com.it.bootlauch.dao.ArticleJDBCDAO;
+import com.it.bootlauch.jpa.testdb.ArticleJDBCDAO;
 import com.it.bootlauch.model.ArticleVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;

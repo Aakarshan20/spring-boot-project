@@ -1,6 +1,6 @@
 package com.it.bootlauch.service;
 
-import com.it.bootlauch.dao.ArticleRepository;
+import com.it.bootlauch.jpa.testdb.ArticleRepository;
 import com.it.bootlauch.entity.Article;
 import com.it.bootlauch.model.ArticleVO;
 import com.it.bootlauch.utils.DozerUtils;
@@ -18,8 +18,6 @@ public class ArticleJPARestService implements ArticleRestService{
 
     @Resource
     private Mapper dozerMapper;
-
-
 
     @Override
     public ArticleVO saveArticle(ArticleVO articleVO) {

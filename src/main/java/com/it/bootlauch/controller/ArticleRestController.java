@@ -84,7 +84,7 @@ public class ArticleRestController{
 		System.out.println(articleVO);
 		
 		 //log.info("getArticle: {}", article);
-		 //return AjaxResponse.success(article);
+		// return AjaxResponse.success(articleVO);
 		return articleVO;
 	}
 

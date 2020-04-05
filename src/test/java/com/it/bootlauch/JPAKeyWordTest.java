@@ -1,6 +1,6 @@
 package com.it.bootlauch;
 
-import com.it.bootlauch.dao.ArticleRepository;
+import com.it.bootlauch.jpa.testdb.ArticleRepository;
 import com.it.bootlauch.entity.Article;
 import org.junit.Test;
 import org.junit.runner.RunWith;
